@@ -61,6 +61,15 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  count:
+    handler: count.main
+    events:
+      - http:
+          path: count
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors

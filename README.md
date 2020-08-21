@@ -29,3 +29,11 @@ Lets say you want to make a change to the `create` function. You can make the ch
 ```
 serverless deploy function --function create
 ```
+
+To deploy the entire serverless application you can simply run:
+
+```
+serverless deploy
+```
+
+This will be neccessary if you change anything in the [serverless.yml](./serverless.yml) configuration such as adding a new API endpoint.
