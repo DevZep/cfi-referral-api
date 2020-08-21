@@ -1,5 +1,5 @@
 {
-  "body": "{\"note\":\"helloworld\",\"attachment\":\"hello.jpg\"}",
+  "body": "{\"name\":\"Duncan\",\"phone\":\"+8551222222222\"}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"

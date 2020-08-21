@@ -9,8 +9,8 @@ export const main = handler(async (event, context) => {
     Item: {
       referralId: uuid.v1(),
       userId: event.requestContext.identity.cognitoIdentityId,
-      note: data.note,
-      attachment: data.attachment,
+      name: data.name,
+      phone: data.phone,
       createdAt: Date.now()
     }
   };
