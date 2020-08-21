@@ -11,6 +11,7 @@ export const main = handler(async (event, context) => {
       userId: event.requestContext.identity.cognitoIdentityId,
       name: data.name,
       phone: data.phone,
+      photo: data.photo,
       createdAt: Date.now()
     }
   };

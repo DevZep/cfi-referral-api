@@ -1,5 +1,5 @@
 {
-  "body": "{\"name\":\"Duncan\",\"phone\":\"+8551222222222\"}",
+  "body": "{\"name\":\"Duncan\",\"phone\":\"+8551222222222\",\"photo\":\"1597983845829-Bitcoin-Genesis-block.jpg\"}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"

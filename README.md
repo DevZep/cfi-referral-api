@@ -22,7 +22,7 @@ For example, below is how to locally test the `create` function using some mocke
 serverless invoke local --function create --path mocks/create-event.json
 ```
 
-## Modification
+## Deployment
 
 Lets say you want to make a change to the `create` function. You can make the change locally, test locally and then deploy. The way to deploy a single function is as follows:
 
