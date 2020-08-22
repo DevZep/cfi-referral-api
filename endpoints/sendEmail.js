@@ -2,15 +2,21 @@ import handler from "../libs/handler-lib";
 import Responses from '../libs/apiResponses-lib';
 const AWS = require('aws-sdk');
 const SES = new AWS.SES();
+let to, from, subject, text;
 
 export const main = handler(async (event, context) => {
-  const { to, from, subject, text } = JSON.parse(event.body);
+  const { referralId } = JSON.parse(event.body);
 
-  if (!to || !from || !subject || !text) {
+  if (!referralId) {
     return Responses._400({
-      message: 'to, from, subject and text are all required in the body',
+      message: 'referralId is required in the body',
     });
   }
+
+  to = 'darren.jensen@gmail.com';
+  from = 'darren.jensen@devzep.com';
+  subject = 'There is a new referral';
+  text = `Referral ID: ${referralId}`;
 
   const params = {
     Destination: {

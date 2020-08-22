@@ -2,6 +2,8 @@ import * as uuid from "uuid";
 import handler from "../libs/handler-lib";
 import dynamoDb from "../libs/dynamodb-lib";
 import Responses from '../libs/apiResponses-lib';
+const AWS = require('aws-sdk');
+const lambda = new AWS.Lambda();
 
 export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
@@ -51,5 +53,18 @@ export const main = handler(async (event, context) => {
     await dynamoDb.put(createCounterParams);
   }
   await dynamoDb.update(updateCounterParams);
+
+  const emailPayload = {
+    body: `{\"referralId\":\"${createReferralParams.Item.referralId}\"}`
+  };
+
+  const paramsLamdba = {
+    FunctionName: 'cfi-referral-api-prod-sendEmail',
+    Payload: JSON.stringify(emailPayload),
+    InvocationType: 'Event'
+  };
+
+  await lambda.invoke(paramsLamdba).promise();
+
   return Responses._200( createReferralParams.Item);
 });

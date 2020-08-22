@@ -25,6 +25,14 @@ serverless invoke local --function get --path mocks/get-event.json
 serverless invoke local --function sendEmail --path mocks/sendEmail-event.json
 ```
 
+### Info
+
+To get information about a particular stage:
+
+```
+sls info -s prod
+```
+
 ## Deployment
 
 Lets say you want to make a change to the `create` function. You can make the change locally, test locally and then deploy. The way to deploy a single function is as follows:

@@ -27,6 +27,8 @@ provider:
       Action:
         - dynamodb:*
         - ses:*
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
       Resource: '*'
 
 functions:
