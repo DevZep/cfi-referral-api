@@ -4,7 +4,7 @@ import Responses from '../libs/apiResponses-lib';
 
 export const main = handler(async (event, context) => {
   const params = {
-    TableName: process.env.TABLE_NAME_COUNT,
+    TableName: process.env.tableNameCount,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
     }

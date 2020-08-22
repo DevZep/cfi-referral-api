@@ -19,19 +19,14 @@ provider:
   # under process.env.
   environment:
     tableName: ${env:TABLE_NAME}
+    tableNameCount: ${env:TABLE_NAME_COUNT}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
+        - dynamodb:*
         - ses:*
       Resource: "arn:aws:dynamodb:ap-southeast-1:*:*"
 
@@ -67,7 +62,7 @@ functions:
     events:
       - http:
           path: send-email
-          method: get
+          method: post
           cors: true
           authorizer: aws_iam
 
