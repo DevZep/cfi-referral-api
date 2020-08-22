@@ -4,7 +4,6 @@ const AWS = require('aws-sdk');
 const SES = new AWS.SES();
 
 export const main = handler(async (event, context) => {
-  // console.log(event);
   const { to, from, subject, text } = JSON.parse(event.body);
 
   if (!to || !from || !subject || !text) {
@@ -26,6 +25,6 @@ export const main = handler(async (event, context) => {
     Source: from,
   };
 
-  await SES.sendEmail(params);
+  await SES.sendEmail(params).promise();
   return Responses._200({message: 'Check yer email!'});
 });

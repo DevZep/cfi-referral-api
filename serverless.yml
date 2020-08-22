@@ -22,13 +22,12 @@ provider:
     tableNameCount: ${env:TABLE_NAME_COUNT}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
-  # In this case Lambda functions are granted with permissions to access DynamoDB.
   iamRoleStatements:
     - Effect: Allow
       Action:
         - dynamodb:*
         - ses:*
-      Resource: "arn:aws:dynamodb:ap-southeast-1:*:*"
+      Resource: '*'
 
 functions:
   create:
@@ -64,7 +63,6 @@ functions:
           path: send-email
           method: post
           cors: true
-          authorizer: aws_iam
 
 # Create our resources with separate CloudFormation templates
 resources:
