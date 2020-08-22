@@ -1,8 +1,9 @@
 import handler from "../libs/handler-lib";
 import Responses from '../libs/apiResponses-lib';
+import dynamoDb from "../libs/dynamodb-lib";
 const AWS = require('aws-sdk');
 const SES = new AWS.SES();
-let to, from, subject, text;
+let to, from, subject, textBody, htmlBody;
 
 export const main = handler(async (event, context) => {
   const { referralId } = JSON.parse(event.body);
@@ -13,24 +14,58 @@ export const main = handler(async (event, context) => {
     });
   }
 
-  to = 'darren.jensen@gmail.com';
-  from = 'darren.jensen@devzep.com';
-  subject = 'There is a new referral';
-  text = `Referral ID: ${referralId}`;
+  const getParams = {
+    TableName: process.env.tableName,
+    Key: {
+      referralId
+    }
+  };
 
-  const params = {
+  const result = await dynamoDb.get(getParams);
+  const referral = result.Item;
+
+  textBody = `Referral ${referralId} Not Found. Please Contact Support.`;
+  htmlBody = `<!DOCTYPE html><html><head></head><body><b>${textBody}</b></body></html>`;
+
+  if (referral) {
+    htmlBody = `
+      <!DOCTYPE html>
+      <html>
+        <head></head>
+        <body>
+          <h3>There is a new referral</h3>
+          <ul>
+            <li>Name: ${referral.name}</li>
+            <li>Phone: ${referral.phone}</li>
+            <li>Photo: ${referral.photo}</li>
+          </ul>
+        </body>
+      </html>
+    `;
+    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nPhoto: ${referral.photo}`;
+  }
+
+  to = process.env.toEmails.split(' ');
+  from = process.env.fromEmail;
+  subject = `New referral: ${referralId}`;
+
+  const emailParams = {
     Destination: {
-        ToAddresses: [to],
+        ToAddresses: to,
     },
     Message: {
         Body: {
-            Text: { Data: text },
+            Text: { Data: textBody },
+            Html: {
+              Charset: 'UTF-8',
+              Data: htmlBody,
+            },
         },
         Subject: { Data: subject },
     },
     Source: from,
   };
 
-  await SES.sendEmail(params).promise();
-  return Responses._200({message: 'Check yer email!'});
+  await SES.sendEmail(emailParams).promise();
+  return Responses._200({message: 'Email sent successfully!'});
 });

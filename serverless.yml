@@ -20,6 +20,8 @@ provider:
   environment:
     tableName: ${env:TABLE_NAME}
     tableNameCount: ${env:TABLE_NAME_COUNT}
+    toEmails: 'darren.jensen@gmail.com darren.jensen@devbootstrap.com'
+    fromEmail: 'darren.jensen@devzep.com'
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   iamRoleStatements:

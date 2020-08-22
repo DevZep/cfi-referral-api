@@ -1,5 +1,5 @@
 {
-  "body": "{\"referralId\":\"123123123\"}",
+  "body": "{\"referralId\":\"d89050e0-e44e-11ea-8eaf-61409ef83f54\"}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
