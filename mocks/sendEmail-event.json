@@ -1,0 +1,8 @@
+{
+  "body": "{\"to\":\"darren@devzep.com\",\"from\":\"darren.jensen@gmail.com\",\"subject\":\"Testing Lambda Email Send\",\"text\":\"Hope you see me soon!\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

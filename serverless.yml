@@ -32,11 +32,12 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+        - ses:*
       Resource: "arn:aws:dynamodb:ap-southeast-1:*:*"
 
 functions:
   create:
-    handler: create.main
+    handler: endpoints/create.main
     events:
       - http:
           path: referrals
@@ -44,7 +45,7 @@ functions:
           cors: true
           authorizer: aws_iam
   get:
-    handler: get.main
+    handler: endpoints/get.main
     events:
       - http:
           path: referrals/{id}
@@ -53,10 +54,19 @@ functions:
           authorizer: aws_iam
 
   count:
-    handler: count.main
+    handler: endpoints/count.main
     events:
       - http:
           path: count
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  sendEmail:
+    handler: endpoints/sendEmail.main
+    events:
+      - http:
+          path: send-email
           method: get
           cors: true
           authorizer: aws_iam

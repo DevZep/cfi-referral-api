@@ -1,5 +1,6 @@
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import handler from "../libs/handler-lib";
+import dynamoDb from "../libs/dynamodb-lib";
+import Responses from '../libs/apiResponses-lib';
 
 export const main = handler(async (event, context) => {
   const params = {
@@ -11,6 +12,5 @@ export const main = handler(async (event, context) => {
 
   const result = await dynamoDb.get(params);
 
-  // Return the row count for the query params
-  return result.Item;
+  return Responses._200(result.Item);
 });

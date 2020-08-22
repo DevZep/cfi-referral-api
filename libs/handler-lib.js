@@ -1,11 +1,12 @@
 export default function handler(lambda) {
   return async function (event, context) {
-    let body, statusCode;
+    let res, statusCode, body;
 
     try {
       // Run the Lambda
-      body = await lambda(event, context);
-      statusCode = 200;
+      res = await lambda(event, context);
+      statusCode = res.statusCode;
+      body = res.body;
     } catch (e) {
       body = { error: e.message };
       statusCode = 500;

@@ -20,6 +20,9 @@ For example, below is how to locally test the `create` function using some mocke
 
 ```
 serverless invoke local --function create --path mocks/create-event.json
+serverless invoke local --function count --path mocks/count-event.json
+serverless invoke local --function get --path mocks/get-event.json
+serverless invoke local --function sendEmail --path mocks/sendEmail-event.json
 ```
 
 ## Deployment

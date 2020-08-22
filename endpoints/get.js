@@ -1,5 +1,6 @@
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import handler from "../libs/handler-lib";
+import dynamoDb from "../libs/dynamodb-lib";
+import Responses from '../libs/apiResponses-lib';
 
 export const main = handler(async (event, context) => {
   const params = {
@@ -11,9 +12,9 @@ export const main = handler(async (event, context) => {
 
   const result = await dynamoDb.get(params);
   if ( ! result.Item) {
-    throw new Error("Item not found.");
+    return Responses._404({message: "Item not found."});
   }
 
   // Return the retrieved item
-  return result.Item;
+  return Responses._200(result.Item);
 });

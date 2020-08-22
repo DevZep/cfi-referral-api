@@ -1,6 +1,7 @@
 import * as uuid from "uuid";
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import handler from "../libs/handler-lib";
+import dynamoDb from "../libs/dynamodb-lib";
+import Responses from '../libs/apiResponses-lib';
 
 export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
@@ -50,5 +51,5 @@ export const main = handler(async (event, context) => {
     await dynamoDb.put(createCounterParams);
   }
   await dynamoDb.update(updateCounterParams);
-  return createReferralParams.Item;
+  return Responses._200( createReferralParams.Item);
 });
