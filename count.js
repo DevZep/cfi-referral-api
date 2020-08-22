@@ -12,5 +12,5 @@ export const main = handler(async (event, context) => {
   const result = await dynamoDb.get(params);
 
   // Return the row count for the query params
-  return result;
+  return result.Item;
 });
