@@ -1,0 +1,25 @@
+Resources:
+  ReferralsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.tableName}
+      AttributeDefinitions:
+        - AttributeName: referralId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: referralId
+          KeyType: HASH
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST
+  ReferralsCountTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.tableNameCount}
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST

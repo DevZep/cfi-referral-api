@@ -30,7 +30,16 @@ serverless invoke local --function sendEmail --path mocks/sendEmail-event.json
 To get information about a particular stage:
 
 ```
-sls info -s prod
+sls info -s dev -v
+sls info -s prod -v
+```
+
+### Print the compiled config file
+
+Useful to verify that the `serverless.yml` is setup ok:
+
+```
+sls print
 ```
 
 ## Deployment
@@ -41,10 +50,16 @@ Lets say you want to make a change to the `create` function. You can make the ch
 serverless deploy function --function create
 ```
 
-To deploy the entire serverless application you can simply run:
+To deploy the entire serverless application you can simply run (the `-v` switch shows the verbose CloudFormation output):
 
 ```
-serverless deploy
+serverless deploy -v
+```
+
+To deploy to a specific stage pass the stage flag like so:
+
+```
+serverless deploy --stage dev
 ```
 
 This will be neccessary if you change anything in the [serverless.yml](./serverless.yml) configuration such as adding a new API endpoint.

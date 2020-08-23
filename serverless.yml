@@ -9,19 +9,26 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
 
+custom:
+  # Below stage setting telling Serverless to first look for the opt:stage (the one passed in through the command line), and then fallback to self:provider.stage (the one in the provider block).
+  stage: ${opt:stage, self:provider.stage}
+  # Set the table name here so we can use it while testing locally
+  tableName: ${self:custom.stage}-referrals
+  tableNameCount: ${self:custom.stage}-referralsCount
+
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: prod
+  stage: dev
   region: ap-southeast-1
 
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: ${env:TABLE_NAME}
-    tableNameCount: ${env:TABLE_NAME_COUNT}
-    toEmails: 'darren.jensen@gmail.com darren.jensen@devbootstrap.com'
-    fromEmail: 'darren.jensen@devzep.com'
+    tableName: ${self:custom.tableName}
+    tableNameCount: ${self:custom.tableNameCount}
+    toEmails: ${env:TO_EMAILS}
+    fromEmail: ${env:FROM_EMAIL}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   iamRoleStatements:
@@ -31,7 +38,16 @@ provider:
         - ses:*
         - lambda:InvokeFunction
         - lambda:InvokeAsync
-      Resource: '*'
+      Resource:
+        - "Fn::GetAtt": [ ReferralsTable, Arn ]
+        - "Fn::GetAtt": [ ReferralsCountTable, Arn ]
+        - "arn:aws:ses:ap-southeast-1:*:identity/*"
+        # Allow any lambda function to be called from another lambda function...
+        # NOTE you can't refer to the Logical ID of the Lambda, otherwise
+        # there will be a circular reference in CloudFormation
+        -
+          Fn::Join:
+            [':', [arn, aws, lambda, '${self:provider.region}', '${env:AWS_ACCOUNT_ID}', 'function', '*']]
 
 functions:
   create:
@@ -72,3 +88,10 @@ functions:
 resources:
   # API Gateway Errors
   - ${file(resources/api-gateway-errors.yml)}
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
+  # S3
+  - ${file(resources/s3-bucket.yml)}
+  # Cognito
+  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-identity-pool.yml)}

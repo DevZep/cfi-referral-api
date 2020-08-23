@@ -20,7 +20,7 @@ export const main = handler(async (event, context) => {
   };
 
   const counterExistsParams = {
-    TableName: process.env.TABLE_NAME_COUNT,
+    TableName: process.env.tableNameCount,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
     },
@@ -30,7 +30,7 @@ export const main = handler(async (event, context) => {
   };
 
   const createCounterParams = {
-    TableName: process.env.TABLE_NAME_COUNT,
+    TableName: process.env.tableNameCount,
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       referralCount: 0
@@ -38,7 +38,7 @@ export const main = handler(async (event, context) => {
   };
 
   const updateCounterParams = {
-    TableName: process.env.TABLE_NAME_COUNT,
+    TableName: process.env.tableNameCount,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
     },
@@ -59,7 +59,8 @@ export const main = handler(async (event, context) => {
   };
 
   const paramsLamdba = {
-    FunctionName: 'cfi-referral-api-prod-sendEmail',
+    // TODO: remove hardcoded dev stage name in function
+    FunctionName: 'arn:aws:lambda:ap-southeast-1:924583607971:function:cfi-referral-api-dev-sendEmail',
     Payload: JSON.stringify(emailPayload),
     InvocationType: 'Event'
   };
