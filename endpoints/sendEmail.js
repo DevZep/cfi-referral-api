@@ -1,9 +1,11 @@
 import handler from "../libs/handler-lib";
 import Responses from '../libs/apiResponses-lib';
 import dynamoDb from "../libs/dynamodb-lib";
+import nodemailer from 'nodemailer';
 const AWS = require('aws-sdk');
 const SES = new AWS.SES();
-let to, from, subject, textBody, htmlBody;
+const S3 = new AWS.S3();
+let textBody, htmlBody, attachments;
 
 export const main = handler(async (event, context) => {
   const { referralId } = JSON.parse(event.body);
@@ -28,6 +30,7 @@ export const main = handler(async (event, context) => {
   htmlBody = `<!DOCTYPE html><html><head></head><body><b>${textBody}</b></body></html>`;
 
   if (referral) {
+    // set the html body
     htmlBody = `
       <!DOCTYPE html>
       <html>
@@ -37,7 +40,6 @@ export const main = handler(async (event, context) => {
           <ul>
             <li>Name: ${referral.name}</li>
             <li>Phone: ${referral.phone}</li>
-            <li>Photo: ${referral.photo}</li>
             <li>Note: ${referral.note}</li>
             <li>DOB: ${referral.dob}</li>
             <li>Gender: ${referral.gender}</li>
@@ -45,30 +47,48 @@ export const main = handler(async (event, context) => {
         </body>
       </html>
     `;
-    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nPhoto: ${referral.photo}`;
+
+    // set the text body
+    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}`;
+
+    attachments = [];
+
+    if(referral.photo) {
+      const paramsS3 = {
+        Bucket: 'cfi-referral-api-dev-attachmentsbucket-1cohl5t7ziug3',
+        Key: `private/${referral.userId}/${referral.photo}`
+       };
+
+      const fileData = await S3.getObject(paramsS3).promise();
+      attachments = [
+        {
+          filename: referral.photo,
+          content: fileData.Body
+        }
+      ];
+    }
   }
 
-  to = process.env.toEmails.split(' ');
-  from = process.env.fromEmail;
-  subject = `New referral: ${referralId}`;
-
-  const emailParams = {
-    Destination: {
-        ToAddresses: to,
-    },
-    Message: {
-        Body: {
-            Text: { Data: textBody },
-            Html: {
-              Charset: 'UTF-8',
-              Data: htmlBody,
-            },
-        },
-        Subject: { Data: subject },
-    },
-    Source: from,
+  var mailOptions = {
+    to: process.env.toEmails.split(' '),
+    from: process.env.fromEmail,
+    subject: `New referral: ${referralId}`,
+    html: htmlBody,
+    text: textBody,
+    attachments: attachments
   };
 
-  await SES.sendEmail(emailParams).promise();
+  // create Nodemailer SES Transporter
+  var transporter = nodemailer.createTransport({
+    SES: SES
+  });
+
+  // send email via the nodemailer transporter
+  await transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      throw Error('Error sending email');
+    }
+  });
+
   return Responses._200({message: 'Email sent successfully!'});
 });
