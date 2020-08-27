@@ -48,7 +48,8 @@ provider:
         - "Fn::GetAtt": [ ReferralsTable, Arn ]
         - "Fn::GetAtt": [ ReferralsCountTable, Arn ]
         - Fn::Join: ['', [Fn::GetAtt: [ AttachmentsBucket, Arn ], '/*'] ]
-        - "arn:aws:ses:ap-southeast-1:*:identity/*"
+        - Fn::Join:
+            [':', [arn, aws, ses, '${self:provider.region}', '${env:AWS_ACCOUNT_ID}', 'identity/*']]
         # Allow any lambda function to be called from another lambda function...
         # NOTE you can't refer to the Logical ID of the Lambda, otherwise
         # there will be a circular reference in CloudFormation

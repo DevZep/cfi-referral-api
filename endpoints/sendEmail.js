@@ -78,17 +78,17 @@ export const main = handler(async (event, context) => {
     attachments: attachments
   };
 
+  if(process.env.stage !== 'prod') {
+    mailOptions.subject = `[${process.env.stage} ENVIRONMENT] - ${mailOptions.subject}`;
+  }
+
   // create Nodemailer SES Transporter
   var transporter = nodemailer.createTransport({
     SES: SES
   });
 
   // send email via the nodemailer transporter
-  await transporter.sendMail(mailOptions, function (err, info) {
-    if (err) {
-      throw Error('Error sending email');
-    }
-  });
+  await transporter.sendMail(mailOptions);
 
   return Responses._200({message: 'Email sent successfully!'});
 });

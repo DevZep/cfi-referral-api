@@ -62,8 +62,7 @@ export const main = handler(async (event, context) => {
   };
 
   const paramsLamdba = {
-    // TODO: remove hardcoded dev stage name in function
-    FunctionName: 'arn:aws:lambda:ap-southeast-1:924583607971:function:cfi-referral-api-dev-sendEmail',
+    FunctionName: `${process.env.lambdaFunctionNamePrefix}-sendEmail`,
     Payload: JSON.stringify(emailPayload),
     InvocationType: 'Event'
   };
