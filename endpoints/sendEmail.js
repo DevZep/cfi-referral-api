@@ -40,11 +40,12 @@ export const main = handler(async (event, context) => {
             <li>Photo: ${referral.photo}</li>
             <li>Note: ${referral.note}</li>
             <li>DOB: ${referral.dob}</li>
+            <li>Gender: ${referral.gender}</li>
           </ul>
         </body>
       </html>
     `;
-    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\DOB: ${referral.dob}\nPhoto: ${referral.photo}`;
+    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nPhoto: ${referral.photo}`;
   }
 
   to = process.env.toEmails.split(' ');

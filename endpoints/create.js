@@ -17,6 +17,7 @@ export const main = handler(async (event, context) => {
       photo: data.photo,
       note: data.note,
       dob: data.dob,
+      gender: data.gender,
       createdAt: Date.now()
     }
   };
