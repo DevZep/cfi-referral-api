@@ -12,7 +12,7 @@ export const main = handler(async (event, context) => {
 
   if (!referralId) {
     return Responses._400({
-      message: 'referralId is required in the body',
+      message: 'referralId is required in the body'
     });
   }
 
@@ -55,7 +55,7 @@ export const main = handler(async (event, context) => {
 
     if(referral.photo) {
       const paramsS3 = {
-        Bucket: 'cfi-referral-api-dev-attachmentsbucket-1cohl5t7ziug3',
+        Bucket: process.env.s3BucketAttachments,
         Key: `private/${referral.userId}/${referral.photo}`
        };
 

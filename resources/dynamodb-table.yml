@@ -2,7 +2,7 @@ Resources:
   ReferralsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: ${self:custom.tableName}
+      TableName: ${self:custom.dynamodb.tableName}
       AttributeDefinitions:
         - AttributeName: referralId
           AttributeType: S
@@ -14,7 +14,7 @@ Resources:
   ReferralsCountTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: ${self:custom.tableNameCount}
+      TableName: ${self:custom.dynamodb.tableNameCount}
       AttributeDefinitions:
         - AttributeName: userId
           AttributeType: S

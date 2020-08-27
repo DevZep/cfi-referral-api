@@ -13,8 +13,12 @@ custom:
   # Below stage setting telling Serverless to first look for the opt:stage (the one passed in through the command line), and then fallback to self:provider.stage (the one in the provider block).
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-referrals
-  tableNameCount: ${self:custom.stage}-referralsCount
+  dynamodb:
+    tableName: ${self:custom.stage}-referrals
+    tableNameCount: ${self:custom.stage}-referralsCount
+  # Set the s3 bucket name for attachments
+  s3:
+    bucketAttachments: ${self:service}-${self:custom.stage}-attachments-1cohl5t7ziug3
 
 provider:
   name: aws
@@ -25,10 +29,11 @@ provider:
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: ${self:custom.tableName}
-    tableNameCount: ${self:custom.tableNameCount}
+    tableName: ${self:custom.dynamodb.tableName}
+    tableNameCount: ${self:custom.dynamodb.tableNameCount}
     toEmails: ${env:TO_EMAILS}
     fromEmail: ${env:FROM_EMAIL}
+    s3BucketAttachments: ${self:custom.s3.bucketAttachments}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   iamRoleStatements:
@@ -36,11 +41,13 @@ provider:
       Action:
         - dynamodb:*
         - ses:*
+        - s3:GetObject
         - lambda:InvokeFunction
         - lambda:InvokeAsync
       Resource:
         - "Fn::GetAtt": [ ReferralsTable, Arn ]
         - "Fn::GetAtt": [ ReferralsCountTable, Arn ]
+        - Fn::Join: ['', [Fn::GetAtt: [ AttachmentsBucket, Arn ], '/*'] ]
         - "arn:aws:ses:ap-southeast-1:*:identity/*"
         # Allow any lambda function to be called from another lambda function...
         # NOTE you can't refer to the Logical ID of the Lambda, otherwise
