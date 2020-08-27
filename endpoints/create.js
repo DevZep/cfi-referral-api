@@ -15,6 +15,8 @@ export const main = handler(async (event, context) => {
       name: data.name,
       phone: data.phone,
       photo: data.photo,
+      note: data.note,
+      dob: data.dob,
       createdAt: Date.now()
     }
   };

@@ -38,11 +38,13 @@ export const main = handler(async (event, context) => {
             <li>Name: ${referral.name}</li>
             <li>Phone: ${referral.phone}</li>
             <li>Photo: ${referral.photo}</li>
+            <li>Note: ${referral.note}</li>
+            <li>DOB: ${referral.dob}</li>
           </ul>
         </body>
       </html>
     `;
-    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nPhoto: ${referral.photo}`;
+    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\DOB: ${referral.dob}\nPhoto: ${referral.photo}`;
   }
 
   to = process.env.toEmails.split(' ');
