@@ -29,6 +29,8 @@ provider:
   # These environment variables are made available to our functions
   # under process.env.
   environment:
+    stage: ${self:custom.stage}
+    lambdaFunctionNamePrefix: ${self:service}-${self:custom.stage}
     tableName: ${self:custom.dynamodb.tableName}
     tableNameCount: ${self:custom.dynamodb.tableNameCount}
     toEmails: ${env:TO_EMAILS}

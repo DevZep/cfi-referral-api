@@ -79,7 +79,7 @@ export const main = handler(async (event, context) => {
   };
 
   if(process.env.stage !== 'prod') {
-    mailOptions.subject = `[${process.env.stage} ENVIRONMENT] - ${mailOptions.subject}`;
+    mailOptions.subject = `[SEND FROM ${process.env.stage} ENVIRONMENT] - ${mailOptions.subject}`;
   }
 
   // create Nodemailer SES Transporter
