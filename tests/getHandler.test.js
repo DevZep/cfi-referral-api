@@ -1,4 +1,4 @@
-import * as getHandler from '../get';
+import * as getHandler from '../endpoints/get';
 
 test('GET referral', async () => {
   const event = 'event';
