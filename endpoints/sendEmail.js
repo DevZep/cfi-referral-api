@@ -79,7 +79,7 @@ export const main = handler(async (event, context) => {
   };
 
   if(process.env.stage !== 'prod') {
-    mailOptions.subject = `[SEND FROM ${process.env.stage} ENVIRONMENT] - ${mailOptions.subject}`;
+    mailOptions.subject = `[${process.env.stage.toUpperCase()}] - ${mailOptions.subject}`;
     mailOptions.to = `${process.env.stage}-cfi-referral-app@devzep.com`;
   }
 
