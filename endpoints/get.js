@@ -6,7 +6,7 @@ export const main = handler(async (event, context) => {
   const params = {
     TableName: process.env.tableName,
     Key: {
-      referralId: event.pathParameters.referralId,
+      referralId: event.pathParameters.id,
     }
   };
 
