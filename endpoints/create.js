@@ -18,6 +18,7 @@ export const main = handler(async (event, context) => {
       note: data.note,
       dob: data.dob,
       gender: data.gender,
+      locationClassification: data.locationClassification,
       createdAt: Date.now()
     }
   };

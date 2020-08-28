@@ -43,13 +43,14 @@ export const main = handler(async (event, context) => {
             <li>Note: ${referral.note}</li>
             <li>DOB: ${referral.dob}</li>
             <li>Gender: ${referral.gender}</li>
+            <li>Location Classification: ${referral.locationClassification}</li>
           </ul>
         </body>
       </html>
     `;
 
     // set the text body
-    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}`;
+    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation Classification: ${referral.locationClassification}`;
 
     attachments = [];
 
