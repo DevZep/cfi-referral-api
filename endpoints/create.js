@@ -19,6 +19,8 @@ export const main = handler(async (event, context) => {
       dob: data.dob,
       gender: data.gender,
       location : data.location,
+      lat : data.lat,
+      lon : data.lon,
       createdAt: Date.now()
     }
   };

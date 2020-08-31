@@ -45,12 +45,15 @@ export const main = handler(async (event, context) => {
             <li>Gender: ${referral.gender}</li>
             <li>Location: ${referral.location}</li>
           </ul>
+          <p>Open Location on
+           <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>
+          </p>
         </body>
       </html>
     `;
 
     // set the text body
-    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}`;
+    textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`;
 
     attachments = [];
 
