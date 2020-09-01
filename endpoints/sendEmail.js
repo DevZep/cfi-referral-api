@@ -44,13 +44,19 @@ export const main = handler(async (event, context) => {
             <li>DOB: ${referral.dob}</li>
             <li>Gender: ${referral.gender}</li>
             <li>Location: ${referral.location}</li>
-          </ul>
-          <p>Open Location on
-           <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>
-          </p>
-        </body>
-      </html>
-    `;
+          </ul>`
+    ;
+
+    // If a lat and lon value are available then include a link to a map
+    if(referral.lat && referral.lon) {
+      htmlBody = `${htmlBody}
+      <p>Open Location on
+        <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>
+      </p>`;
+    }
+
+    // Close out the body and html tag
+    htmlBody = htmlBody + '</body></html>';
 
     // set the text body
     textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`;
