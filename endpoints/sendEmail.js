@@ -82,7 +82,7 @@ export const main = handler(async (event, context) => {
   var mailOptions = {
     to: process.env.toEmails.split(' '),
     from: process.env.fromEmail,
-    subject: 'Client Referral',
+    subject: `Client Referral: ${referralId.slice(0,8)}`,
     html: htmlBody,
     text: textBody,
     attachments: attachments
