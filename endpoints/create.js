@@ -21,6 +21,7 @@ export const main = handler(async (event, context) => {
       location : data.location,
       lat : data.lat,
       lon : data.lon,
+      orgemail: data.orgemail,
       createdAt: Date.now()
     }
   };

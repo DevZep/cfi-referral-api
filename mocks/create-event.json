@@ -1,5 +1,5 @@
 {
-  "body": "{\"name\":\"Duncan\",\"phone\":\"+8551222222222\",\"photo\":\"1597983845829-Bitcoin-Genesis-block.jpg\"}",
+  "body": "{\"name\":\"Duncan\",\"phone\":\"+8551222222222\",\"photo\":\"1597983845829-Bitcoin-Genesis-block.jpg\",\"orgemail\":\"dev-cfi-referral-app@devzep.com\"}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
