@@ -19,10 +19,10 @@ Locally test the API's using mock data that is available in this projects [mocks
 For example, below is how to locally test the `create` function using some mocked data.
 
 ```
-serverless invoke local --function create --path mocks/create-event.json
-serverless invoke local --function count --path mocks/count-event.json
-serverless invoke local --function get --path mocks/get-event.json
-serverless invoke local --function sendEmail --path mocks/sendEmail-event.json
+sls invoke local --f create --path mocks/create-event.json
+sls invoke local --f count --path mocks/count-event.json
+sls invoke local --f get --path mocks/get-event.json
+sls invoke local --f sendEmail --path mocks/sendEmail-event.json
 ```
 
 ### Info

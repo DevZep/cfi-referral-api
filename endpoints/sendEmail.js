@@ -69,13 +69,17 @@ export const main = handler(async (event, context) => {
         Key: `private/${referral.userId}/${referral.photo}`
        };
 
-      const fileData = await S3.getObject(paramsS3).promise();
-      attachments = [
-        {
-          filename: referral.photo,
-          content: fileData.Body
-        }
-      ];
+      try {
+        const fileData = await S3.getObject(paramsS3).promise();
+        attachments = [
+          {
+            filename: referral.photo,
+            content: fileData.Body
+          }
+        ];
+      } catch(e) {
+        console.error('Photo was not found in S3!');
+      }
     }
   }
 
