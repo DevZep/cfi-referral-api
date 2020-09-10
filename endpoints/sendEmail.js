@@ -79,8 +79,12 @@ export const main = handler(async (event, context) => {
     }
   }
 
+  // check the email exists in a list of whitelisted email addresses to send to
+  let whitelist = process.env.toEmails.split(',');
+  if(!whitelist.includes(referral.orgemail)) { throw({message: `Email ${referral.orgemail} not whitelisted`}); };
+
   var mailOptions = {
-    to: process.env.toEmails.split(' '),
+    to: referral.orgemail,
     from: process.env.fromEmail,
     subject: `Client Referral: ${referralId.slice(0,8)}`,
     html: htmlBody,
@@ -90,7 +94,6 @@ export const main = handler(async (event, context) => {
 
   if(process.env.stage !== 'prod') {
     mailOptions.subject = `[${process.env.stage.toUpperCase()}] - ${mailOptions.subject}`;
-    mailOptions.to = `${process.env.stage}-cfi-referral-app@devzep.com`;
   }
 
   // create Nodemailer SES Transporter

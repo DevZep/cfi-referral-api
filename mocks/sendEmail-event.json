@@ -1,8 +1,8 @@
 {
-  "body": "{\"referralId\":\"a981b520-eb81-11ea-9fab-c18c0b3bef1a\"}",
+  "body": "{\"referralId\":\"89abc330-f306-11ea-a03d-b76be7c6129e\"}",
   "requestContext": {
     "identity": {
-      "cognitoIdentityId": "USER-SUB-1234"
+      "cognitoIdentityId": "ap-southeast-1:c342f6d1-7500-41b0-8987-c2d84dc2bc3d"
     }
   }
 }
