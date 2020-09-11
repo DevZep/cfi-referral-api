@@ -26,6 +26,14 @@ export const main = handler(async (event, context) => {
   const result = await dynamoDb.get(getParams);
   const referral = result.Item;
 
+  // check the email exists in a list of whitelisted email addresses to send to
+  let whitelist = process.env.toEmails.split(',');
+  if(!whitelist.includes(referral.orgemail)) { throw({message: `Email ${referral.orgemail} not whitelisted`}); };
+
+  // oscar domains
+  let oscarDomains = ['demo','dc'];
+  let selectedOscarDomain = oscarDomains[whitelist.indexOf(referral.orgemail)];
+
   textBody = `Referral ${referralId} Not Found. Please Contact Support.`;
   htmlBody = `<!DOCTYPE html><html><head></head><body><b>${textBody}</b></body></html>`;
 
@@ -44,7 +52,10 @@ export const main = handler(async (event, context) => {
             <li>DOB: ${referral.dob}</li>
             <li>Gender: ${referral.gender}</li>
             <li>Location: ${referral.location}</li>
-          </ul>`
+          </ul>
+          <p>Open OSCaR
+            <a href='http://${selectedOscarDomain}.oscarhq-staging.com/clients/new'>OSCaR</a>
+          </p>`
     ;
 
     // If a lat and lon value are available then include a link to a map
@@ -82,10 +93,6 @@ export const main = handler(async (event, context) => {
       }
     }
   }
-
-  // check the email exists in a list of whitelisted email addresses to send to
-  let whitelist = process.env.toEmails.split(',');
-  if(!whitelist.includes(referral.orgemail)) { throw({message: `Email ${referral.orgemail} not whitelisted`}); };
 
   var mailOptions = {
     to: referral.orgemail,
