@@ -1,6 +1,11 @@
+import * as debug from "./debug-lib";
+
 export default function handler(lambda) {
   return async function (event, context) {
     let res, statusCode, body;
+
+    // Start debugger
+    debug.init(event, context);
 
     try {
       // Run the Lambda
@@ -8,6 +13,9 @@ export default function handler(lambda) {
       statusCode = res.statusCode;
       body = res.body;
     } catch (e) {
+      // Print debug messages
+      debug.flush(e);
+
       body = { error: e.message };
       statusCode = 500;
     }

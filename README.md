@@ -63,3 +63,14 @@ serverless deploy --stage dev
 ```
 
 This will be neccessary if you change anything in the [serverless.yml](./serverless.yml) configuration such as adding a new API endpoint.
+
+## Add Emails to Whitelist
+
+To add a new email to the whitelist you will need to:
+
+1. Log into [seed.run](https://seed.run)
+1. Navigate to the [project settings](https://console.seed.run/devzep/cfi-referral-api/settings)
+1. Select the stage that you want to configure. For example [dev](https://console.seed.run/devzep/cfi-referral-api/settings/stages/dev)
+1. Scroll down and click 'Show ENV Variables'
+1. The `TO_EMAILS` key contains the whitelisted emails that you can update.
+1. Save the settings and enjoy!
