@@ -57,7 +57,7 @@ test('renderHtml() when referral IS found', () => {
             <li>Location: ${referral.location}</li>
           </ul>
           <p>Open OSCaR
-            <a href='http://dc.oscarhq-staging.com/clients/new'>OSCaR</a>
+            <a href='http://dc.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${referral.gender}'>OSCaR</a>
           </p>
       <p>Open Location on
         <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>

@@ -44,6 +44,10 @@ sls print
 
 ## Deployment
 
+We are using [seed.run](https://seed.run) which autmatically deploys the project to the `dev` stage when we push changes to the `master` branch. The stages can be promoted to `stageing` and `production` via the seed.run app.
+
+However, you can also deploy the app or individual functions using the `serverless` cli tool as follows.
+
 Lets say you want to make a change to the `create` function. You can make the change locally, test locally and then deploy. The way to deploy a single function is as follows:
 
 ```
@@ -63,6 +67,8 @@ serverless deploy --stage dev
 ```
 
 This will be neccessary if you change anything in the [serverless.yml](./serverless.yml) configuration such as adding a new API endpoint.
+
+
 
 ## Add Emails to Whitelist
 

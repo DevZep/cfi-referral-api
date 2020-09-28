@@ -37,7 +37,7 @@ export function renderHtml(id, referral, domain) {
             <li>Location: ${referral.location}</li>
           </ul>
           <p>Open OSCaR
-            <a href='http://${domain}.oscarhq-staging.com/clients/new'>OSCaR</a>
+            <a href='http://${domain}.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${referral.gender}'>OSCaR</a>
           </p>`;
 
     // If a lat and lon value are available then include a link to a map
