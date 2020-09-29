@@ -27,7 +27,7 @@ export const main = handler(async (event, context) => {
   const result = await dynamoDb.get(getParams);
   const referral = result.Item;
 
-  emailLib.setWhitelist(process.env.TO_EMAILS);
+  emailLib.setWhitelist(process.env.toEmails);
 
   // check the email exists in a list of whitelisted email addresses to send to
   emailLib.checkWhitelist(referral.orgemail);
