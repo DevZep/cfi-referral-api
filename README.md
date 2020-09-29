@@ -68,8 +68,6 @@ serverless deploy --stage dev
 
 This will be neccessary if you change anything in the [serverless.yml](./serverless.yml) configuration such as adding a new API endpoint.
 
-
-
 ## Add Emails to Whitelist
 
 To add a new email to the whitelist you will need to:
@@ -80,3 +78,5 @@ To add a new email to the whitelist you will need to:
 1. Scroll down and click 'Show ENV Variables'
 1. The `TO_EMAILS` key contains the whitelisted emails that you can update.
 1. Save the settings and enjoy!
+
+Note you will also need to add the email to the front end of the application in `orgEmails.ts` file.
