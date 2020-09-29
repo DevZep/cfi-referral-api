@@ -22,7 +22,7 @@ export const main = handler(async (event, context) => {
       lat : data.lat,
       lon : data.lon,
       orgemail: data.orgemail,
-      oscarSubdomian: data.oscarSubdomian,
+      oscarSubdomain: data.oscarSubdomain,
       createdAt: Date.now()
     }
   };
