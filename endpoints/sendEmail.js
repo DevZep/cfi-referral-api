@@ -27,12 +27,13 @@ export const main = handler(async (event, context) => {
   const result = await dynamoDb.get(getParams);
   const referral = result.Item;
 
+  emailLib.setWhitelist(process.env.TO_EMAILS);
+
   // check the email exists in a list of whitelisted email addresses to send to
-  let whitelist = process.env.toEmails.split(',');
-  emailLib.checkWhitelist(whitelist, referral.orgemail);
+  emailLib.checkWhitelist(referral.orgemail);
 
   // oscar domains
-  let oscarDomain = emailLib.selectOscarSubDomain(whitelist, referral.orgemail);
+  let oscarDomain = emailLib.selectOscarSubDomain(referral.orgemail);
 
   htmlBody = emailLib.renderHtml(referralId, referral, oscarDomain);
   textBody = emailLib.renderText(referralId, referral, oscarDomain);

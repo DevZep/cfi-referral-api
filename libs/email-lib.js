@@ -1,14 +1,29 @@
-let oscarDomains = ['demo','dc'];
+let oscarDomains = ['demo','dc', 'dc', 'dc', 'dc', 'dc'];
 
-export function selectOscarSubDomain(whitelist, orgemail) {
-  return oscarDomains[whitelist.indexOf(orgemail)];
+exports.whitelist = [];
+
+export {
+  setWhitelist,
+  selectOscarSubDomain,
+  checkWhitelist,
+  renderText,
+  renderHtml
+};
+
+function setWhitelist(whitelistCSV) {
+  this.whitelist = whitelistCSV.split(',');
 }
 
-export function checkWhitelist(whitelist, orgemail) {
-  if(!whitelist.includes(orgemail)) { throw({message: `Email ${orgemail} not whitelisted`}); };
+function selectOscarSubDomain(orgemail) {
+  return oscarDomains[this.whitelist.indexOf(orgemail)];
 }
 
-export function renderText(id, referral, domain) {
+function checkWhitelist(orgemail) {
+  if(!this.whitelist.includes(orgemail)) { throw({message: `Email ${orgemail} not whitelisted`}); };
+  return true;
+}
+
+function renderText(id, referral, domain) {
   let textBody;
   if(referral) {
     textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`;
@@ -18,7 +33,7 @@ export function renderText(id, referral, domain) {
   return textBody;
 }
 
-export function renderHtml(id, referral, domain) {
+function renderHtml(id, referral, domain) {
   let htmlBody;
   if (referral) {
     // set the html body

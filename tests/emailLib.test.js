@@ -1,5 +1,5 @@
 import * as email from '../libs/email-lib';
-let whitelist = ['email1@gmail.com', 'email2@gmail.com']
+let whitelistCSV = 'dev-cfi-referral-app@devzep.com,dev-cfi-referral-app2@devzep.com,darren@devzep.com,damon@devzep.com,seyha@devzep.com,makara@devzep.com'
 let id = "d58947f0-e86b-11ea-8456-134c20446fb6"
 let notfoundId = "999999999"
 let referral = {
@@ -17,17 +17,48 @@ let referral = {
   userId: "ap-southeast-1:c342f6d1-7500-41b0-8987-8jdjhr83"
 }
 
-test('selectOscarSubDomain()', () => {
-  expect(email.selectOscarSubDomain(whitelist, whitelist[0])).toEqual('demo')
-  expect(email.selectOscarSubDomain(whitelist, whitelist[1])).toEqual('dc')
-});
+describe('setWhitelist()', () => {
+  it('should split the comma separated list of emails into an array of emails', () => {
+    expect(email.whitelist).toEqual([])
+    email.setWhitelist(whitelistCSV)
+    expect(email.whitelist).toEqual(whitelistCSV.split(','))
+  })
+})
 
-test('checkWhitelist()', () => {
-  let orgemail = 'notwhitelisted@gmail.com'
-  expect(() => {
-    email.checkWhitelist(whitelist, 'notwhitelisted@gmail.com')
-  }).toThrow(`Email ${orgemail} not whitelisted`);
-});
+describe('selectOscarSubDomain()', () => {
+  beforeAll(() => {
+    email.setWhitelist(whitelistCSV)
+  })
+  it('should return the corresponding oscar sub-domain to use', () => {
+    expect(email.selectOscarSubDomain(email.whitelist[0])).toEqual('demo')
+    expect(email.selectOscarSubDomain(email.whitelist[1])).toEqual('dc')
+    expect(email.selectOscarSubDomain(email.whitelist[2])).toEqual('dc')
+  });
+})
+
+describe('checkWhitelist()', () => {
+  beforeAll(() => {
+    email.setWhitelist(whitelistCSV)
+  })
+  describe('when email is in whitelist', () => {
+    it('should return true', () => {
+      email.checkWhitelist('darren@devzep.com')
+    })
+    it('should return true', () => {
+      let singleEmailWhitelist = 'darren.jensen@gmail.com'
+      email.setWhitelist(singleEmailWhitelist)
+      email.checkWhitelist('darren.jensen@gmail.com')
+    })
+  })
+  describe('when email is NOT included in the whitelist', () => {
+    it('should thow an exception', () => {
+      let orgemail = 'notwhitelisted@gmail.com'
+      expect(() => {
+        email.checkWhitelist('notwhitelisted@gmail.com')
+      }).toThrow(`Email ${orgemail} not whitelisted`);
+    })
+  })
+})
 
 test('renderText() when referral NOT found', () => {
   expect(email.renderText(notfoundId, undefined)).toEqual(`Referral ${notfoundId} Not Found. Please Contact Support.`)
