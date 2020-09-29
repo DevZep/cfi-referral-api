@@ -15,6 +15,6 @@ export const main = handler(async (event, context) => {
     return Responses._404({message: "Item not found."});
   }
 
-  // Return the retrieved item
+  // Return the retrieved item as a 200 response
   return Responses._200(result.Item);
 });
