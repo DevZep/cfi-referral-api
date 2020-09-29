@@ -1,25 +1,18 @@
 let oscarDomains = ['demo','dc', 'dc', 'dc', 'dc', 'dc'];
 
-exports.whitelist = [];
-
 export {
-  setWhitelist,
   selectOscarSubDomain,
   checkWhitelist,
   renderText,
   renderHtml
 };
 
-function setWhitelist(whitelistCSV) {
-  this.whitelist = whitelistCSV.split(',');
+function selectOscarSubDomain(whitelist, orgemail) {
+  return oscarDomains[whitelist.indexOf(orgemail)];
 }
 
-function selectOscarSubDomain(orgemail) {
-  return oscarDomains[this.whitelist.indexOf(orgemail)];
-}
-
-function checkWhitelist(orgemail) {
-  if(!this.whitelist.includes(orgemail)) { throw({message: `Email ${orgemail} not whitelisted`}); };
+function checkWhitelist(whitelist, orgemail) {
+  if(!whitelist.includes(orgemail)) { throw({message: `Email ${orgemail} not whitelisted`}); };
   return true;
 }
 

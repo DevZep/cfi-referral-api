@@ -17,44 +17,32 @@ let referral = {
   userId: "ap-southeast-1:c342f6d1-7500-41b0-8987-8jdjhr83"
 }
 
-describe('setWhitelist()', () => {
-  it('should split the comma separated list of emails into an array of emails', () => {
-    expect(email.whitelist).toEqual([])
-    email.setWhitelist(whitelistCSV)
-    expect(email.whitelist).toEqual(whitelistCSV.split(','))
-  })
-})
-
 describe('selectOscarSubDomain()', () => {
-  beforeAll(() => {
-    email.setWhitelist(whitelistCSV)
-  })
   it('should return the corresponding oscar sub-domain to use', () => {
-    expect(email.selectOscarSubDomain(email.whitelist[0])).toEqual('demo')
-    expect(email.selectOscarSubDomain(email.whitelist[1])).toEqual('dc')
-    expect(email.selectOscarSubDomain(email.whitelist[2])).toEqual('dc')
+    let whitelist = whitelistCSV.split(',')
+    expect(email.selectOscarSubDomain(whitelist, whitelist[0])).toEqual('demo')
+    expect(email.selectOscarSubDomain(whitelist, whitelist[1])).toEqual('dc')
+    expect(email.selectOscarSubDomain(whitelist, whitelist[2])).toEqual('dc')
   });
 })
 
 describe('checkWhitelist()', () => {
-  beforeAll(() => {
-    email.setWhitelist(whitelistCSV)
-  })
   describe('when email is in whitelist', () => {
     it('should return true', () => {
-      email.checkWhitelist('darren@devzep.com')
+      let whitelist = whitelistCSV.split(',')
+      email.checkWhitelist(whitelist, 'darren@devzep.com')
     })
     it('should return true', () => {
-      let singleEmailWhitelist = 'darren.jensen@gmail.com'
-      email.setWhitelist(singleEmailWhitelist)
-      email.checkWhitelist('darren.jensen@gmail.com')
+      let singleEmailWhitelist = ['darren.jensen@gmail.com']
+      email.checkWhitelist(singleEmailWhitelist, 'darren.jensen@gmail.com')
     })
   })
   describe('when email is NOT included in the whitelist', () => {
     it('should thow an exception', () => {
       let orgemail = 'notwhitelisted@gmail.com'
+      let whitelist = whitelistCSV.split(',')
       expect(() => {
-        email.checkWhitelist('notwhitelisted@gmail.com')
+        email.checkWhitelist(whitelist, orgemail)
       }).toThrow(`Email ${orgemail} not whitelisted`);
     })
   })
