@@ -14,17 +14,9 @@ let referral = {
   note: 'This is a note',
   lat: '11.532296299999999',
   lon: '104.91594169999999',
+  oscarSubdomain: 'dc',
   userId: "ap-southeast-1:c342f6d1-7500-41b0-8987-8jdjhr83"
 }
-
-describe('selectOscarSubDomain()', () => {
-  it('should return the corresponding oscar sub-domain to use', () => {
-    let whitelist = whitelistCSV.split(',')
-    expect(email.selectOscarSubDomain(whitelist, whitelist[0])).toEqual('demo')
-    expect(email.selectOscarSubDomain(whitelist, whitelist[1])).toEqual('dc')
-    expect(email.selectOscarSubDomain(whitelist, whitelist[2])).toEqual('dc')
-  });
-})
 
 describe('checkWhitelist()', () => {
   describe('when email is in whitelist', () => {
@@ -57,11 +49,11 @@ test('renderText() when referral IS found', () => {
 })
 
 test('renderHtml() when referral NOT found', () => {
-  expect(email.renderHtml(notfoundId, undefined, 'dc')).toEqual(`<!DOCTYPE html><html><head></head><body><b>Referral ${notfoundId} Not Found. Please Contact Support.</b></body></html>`)
+  expect(email.renderHtml(notfoundId, undefined)).toEqual(`<!DOCTYPE html><html><head></head><body><b>Referral ${notfoundId} Not Found. Please Contact Support.</b></body></html>`)
 })
 
 test('renderHtml() when referral IS found', () => {
-  expect(email.renderHtml(id, referral, 'dc')).toEqual(`
+  expect(email.renderHtml(id, referral)).toEqual(`
       <!DOCTYPE html>
       <html>
         <head></head>

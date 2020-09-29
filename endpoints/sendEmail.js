@@ -32,11 +32,8 @@ export const main = handler(async (event, context) => {
   // check the email exists in a list of whitelisted email addresses to send to
   emailLib.checkWhitelist(whitelist, referral.orgemail);
 
-  // oscar domains
-  let oscarDomain = emailLib.selectOscarSubDomain(whitelist, referral.orgemail);
-
-  htmlBody = emailLib.renderHtml(referralId, referral, oscarDomain);
-  textBody = emailLib.renderText(referralId, referral, oscarDomain);
+  htmlBody = emailLib.renderHtml(referralId, referral);
+  textBody = emailLib.renderText(referralId, referral);
 
   attachments = [];
 

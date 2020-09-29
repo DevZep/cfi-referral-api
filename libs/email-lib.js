@@ -1,22 +1,15 @@
-let oscarDomains = ['demo','dc', 'dc', 'dc', 'dc', 'dc'];
-
 export {
-  selectOscarSubDomain,
   checkWhitelist,
   renderText,
   renderHtml
 };
-
-function selectOscarSubDomain(whitelist, orgemail) {
-  return oscarDomains[whitelist.indexOf(orgemail)];
-}
 
 function checkWhitelist(whitelist, orgemail) {
   if(!whitelist.includes(orgemail)) { throw({message: `Email ${orgemail} not whitelisted`}); };
   return true;
 }
 
-function renderText(id, referral, domain) {
+function renderText(id, referral) {
   let textBody;
   if(referral) {
     textBody = `Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`;
@@ -26,7 +19,7 @@ function renderText(id, referral, domain) {
   return textBody;
 }
 
-function renderHtml(id, referral, domain) {
+function renderHtml(id, referral) {
   let htmlBody;
   if (referral) {
     // set the html body
@@ -45,7 +38,7 @@ function renderHtml(id, referral, domain) {
             <li>Location: ${referral.location}</li>
           </ul>
           <p>Open OSCaR
-            <a href='http://${domain}.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${referral.gender}'>OSCaR</a>
+            <a href='http://${referral.oscarSubdomain}.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${referral.gender}'>OSCaR</a>
           </p>`;
 
     // If a lat and lon value are available then include a link to a map
