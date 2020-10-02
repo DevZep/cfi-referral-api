@@ -9,8 +9,8 @@ Resources:
         - email
       AutoVerifiedAttributes:
         - email
-    PasswordPolicy:
-      RequireSymbols: false
+      PasswordPolicy:
+        RequireSymbols: false
 
   CognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient

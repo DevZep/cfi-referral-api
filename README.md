@@ -42,6 +42,14 @@ Useful to verify that the `serverless.yml` is setup ok:
 sls print
 ```
 
+### Validate the configuration against AWS CloudFormation
+
+Apparently this will do the trick (taken from [this article](https://www.nellysattari.com/validate-serverless-yml-firl-for-lambda-aws-before-deployment/))
+
+```
+sls deploy --noDeploy --stage dev --region ap-southeast-2
+```
+
 ## Deployment
 
 We are using [seed.run](https://seed.run) which autmatically deploys the project to the `dev` stage when we push changes to the `master` branch. The stages can be promoted to `stageing` and `production` via the seed.run app.
