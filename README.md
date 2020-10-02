@@ -80,3 +80,23 @@ To add a new email to the whitelist you will need to:
 1. Save the settings and enjoy!
 
 Note you will also need to add the email to the front end of the application in `orgEmails.ts` file.
+
+## Reset environemnts for testing
+
+Sometimes you might want to delete all data and redeploy the entire stack. This is easy to do with serverless as follows:
+
+Remove the environment. Note you may get an error about not deleting an S3 bucket if it contains data. Usually you can go and delete directly from S3 console. You may also need to manyally `delete the cloud formation stack` before running this command.
+
+```
+serverless remove --stage dev
+```
+
+Now re deploy the environment.
+
+```
+serverless deploy --stage dev
+```
+
+Note you will need to update the AWS config in your client app since the ids will have changed!
+
+Now you can test in the `dev` environment with a clean DynamoDB and Cognito database.

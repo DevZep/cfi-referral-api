@@ -9,7 +9,7 @@ let referral = {
   photo: "1598536037983-Image.jpeg",
   createdAt: 1598536042991,
   dob: '1989-09-10',
-  gender: 'Male',
+  gender: 'Prefer not to say',
   location: 'Work',
   note: 'This is a note',
   lat: '11.532296299999999',
@@ -40,6 +40,14 @@ describe('checkWhitelist()', () => {
   })
 })
 
+describe('convertToLowerAndUnderscore', () => {
+  it('should convert a string to lower case and replace spaces with underscores', () => {
+    let inputStr = 'Prefer not to say'
+    let expectedOutput = 'prefer_not_to_say'
+    expect(email.convertToLowerAndUnderscore(inputStr)).toEqual(expectedOutput)
+  })
+})
+
 test('renderText() when referral NOT found', () => {
   expect(email.renderText(notfoundId, undefined)).toEqual(`Referral ${notfoundId} Not Found. Please Contact Support.`)
 })
@@ -53,6 +61,7 @@ test('renderHtml() when referral NOT found', () => {
 })
 
 test('renderHtml() when referral IS found', () => {
+  let gender = email.convertToLowerAndUnderscore(referral.gender)
   expect(email.renderHtml(id, referral)).toEqual(`
       <!DOCTYPE html>
       <html>
@@ -68,7 +77,7 @@ test('renderHtml() when referral IS found', () => {
             <li>Location: ${referral.location}</li>
           </ul>
           <p>Open OSCaR
-            <a href='http://dc.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${referral.gender}'>OSCaR</a>
+            <a href='http://dc.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
           </p>
       <p>Open Location on
         <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>

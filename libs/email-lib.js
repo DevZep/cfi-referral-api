@@ -1,7 +1,8 @@
 export {
   checkWhitelist,
   renderText,
-  renderHtml
+  renderHtml,
+  convertToLowerAndUnderscore
 };
 
 function checkWhitelist(whitelist, orgemail) {
@@ -19,9 +20,15 @@ function renderText(id, referral) {
   return textBody;
 }
 
+function convertToLowerAndUnderscore(text) {
+  return text.toLowerCase().replace(/ /g, '_');
+}
+
 function renderHtml(id, referral) {
   let htmlBody;
   if (referral) {
+    // convert gender to lower case with underscores
+    let gender = convertToLowerAndUnderscore(referral.gender);
     // set the html body
     htmlBody = `
       <!DOCTYPE html>
@@ -38,7 +45,7 @@ function renderHtml(id, referral) {
             <li>Location: ${referral.location}</li>
           </ul>
           <p>Open OSCaR
-            <a href='http://${referral.oscarSubdomain}.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${referral.gender}'>OSCaR</a>
+            <a href='http://${referral.oscarSubdomain}.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
           </p>`;
 
     // If a lat and lon value are available then include a link to a map
