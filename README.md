@@ -104,7 +104,7 @@ serverless deploy --stage dev
 
 Note you may get an error about not deleting an S3 bucket if it contains data. Usually you can go and delete directly from S3 console. You may also need to manyally `delete the cloud formation stack` before running this command.
 
-Note you will need to update the AWS config in the [CFI Referral client app](https://github.com/DevZep/cfi-referral-client) since the ids will have changed!
+Note you will need to update the local `.env` in the [CFI Referral client app](https://github.com/DevZep/cfi-referral-client) for local app development since the ids will have changed and also in the [Netify environemnt variables](https://docs.netlify.com/configure-builds/environment-variables/) for all the environments where they changed.
 
 Now you can test in the `dev` environment with a clean DynamoDB and Cognito database.
 
