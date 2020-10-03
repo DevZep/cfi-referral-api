@@ -108,3 +108,9 @@ serverless deploy --stage dev
 Note you will need to update the AWS config in your client app since the ids will have changed!
 
 Now you can test in the `dev` environment with a clean DynamoDB and Cognito database.
+
+## Configuring AWS Resources
+
+The AWS Resources are configured under the [resources](./resources) directory. To add new resources or add new properties to existing resources refer to the [AWS CloudFormation resource and property types reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
+
+For example, I recently added a `PasswordPolicy` to the [`AWS::Cognito::UserPool`](./resources/cognito-user-pool.yml) resource and it turns out that it is necessary to put the `PasswordPolicy` under `Policies` key as identified in the [AWS::Cognito::UserPool](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpool.html) AWS CloudFormation Documention. So pay attention to these docs! :)
