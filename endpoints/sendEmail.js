@@ -45,10 +45,13 @@ export const main = handler(async (event, context) => {
 
     try {
       const fileData = await S3.getObject(paramsS3).promise();
+      // image is saved in s3 as a base64 string so we need to convert that to an image bitmap
+      let base64Image = fileData.Body.toString().split(';base64,').pop();
+      var bitmap = Buffer.from(base64Image, 'base64');
       attachments = [
         {
           filename: referral.photo,
-          content: fileData.Body
+          content: bitmap
         }
       ];
     } catch(e) {
