@@ -17,6 +17,7 @@ let referral = {
   oscarSubdomain: 'dc',
   userId: "ap-southeast-1:c342f6d1-7500-41b0-8987-8jdjhr83"
 }
+let oscarDomain = 'oscarhq-staging.com'
 
 describe('checkWhitelist()', () => {
   describe('when email is in whitelist', () => {
@@ -56,13 +57,14 @@ test('renderText() when referral IS found', () => {
   expect(email.renderText(id, referral)).toEqual(`Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`)
 })
 
-test('renderHtml() when referral NOT found', () => {
-  expect(email.renderHtml(notfoundId, undefined)).toEqual(`<!DOCTYPE html><html><head></head><body><b>Referral ${notfoundId} Not Found. Please Contact Support.</b></body></html>`)
-})
+describe('renderHtml()', () => {
+  it('should render a not found message when referral NOT found', () => {
+    expect(email.renderHtml(notfoundId, undefined, oscarDomain)).toEqual(`<!DOCTYPE html><html><head></head><body><b>Referral ${notfoundId} Not Found. Please Contact Support.</b></body></html>`)
+  })
 
-test('renderHtml() when referral IS found', () => {
-  let gender = email.convertToLowerAndUnderscore(referral.gender)
-  expect(email.renderHtml(id, referral)).toEqual(`
+  it('should render the full email content when referral IS found', () => {
+    let gender = email.convertToLowerAndUnderscore(referral.gender)
+    expect(email.renderHtml(id, referral, oscarDomain)).toEqual(`
       <!DOCTYPE html>
       <html>
         <head></head>
@@ -76,10 +78,36 @@ test('renderHtml() when referral IS found', () => {
             <li>Gender: ${referral.gender}</li>
             <li>Location: ${referral.location}</li>
           </ul>
-          <p>Open OSCaR
-            <a href='http://dc.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
-          </p>
+      <p>Open OSCaR
+        <a href='https://dc.${oscarDomain}/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
+      </p>
       <p>Open Location on
         <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>
       </p></body></html>`)
+  })
+
+  it('should inlude a link to oscarhq.com home page when oscar subdomain is empty', () => {
+    referral.oscarSubdomain = ''
+    expect(email.renderHtml(id, referral, oscarDomain)).toEqual(`
+      <!DOCTYPE html>
+      <html>
+        <head></head>
+        <body>
+          <h3>There is a new referral</h3>
+          <ul>
+            <li>Name: ${referral.name}</li>
+            <li>Phone: ${referral.phone}</li>
+            <li>Note: ${referral.note}</li>
+            <li>DOB: ${referral.dob}</li>
+            <li>Gender: ${referral.gender}</li>
+            <li>Location: ${referral.location}</li>
+          </ul>
+      <p>Not using OSCaR? Check it out here:
+        <a href='https://${oscarDomain}/'>OSCaR</a>
+      </p>
+      <p>Open Location on
+        <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>
+      </p></body></html>`)
+  })
 })
+

@@ -28,11 +28,12 @@ export const main = handler(async (event, context) => {
   const referral = result.Item;
 
   let whitelist = process.env.toEmails.split(',');
+  let oscarDomain = process.env.oscarDomain;
 
   // check the email exists in a list of whitelisted email addresses to send to
   emailLib.checkWhitelist(whitelist, referral.orgemail);
 
-  htmlBody = emailLib.renderHtml(referralId, referral);
+  htmlBody = emailLib.renderHtml(referralId, referral, oscarDomain);
   textBody = emailLib.renderText(referralId, referral);
 
   attachments = [];

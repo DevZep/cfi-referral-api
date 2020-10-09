@@ -24,7 +24,7 @@ function convertToLowerAndUnderscore(text) {
   return text.toLowerCase().replace(/ /g, '_');
 }
 
-function renderHtml(id, referral) {
+function renderHtml(id, referral, oscarDomain) {
   let htmlBody;
   if (referral) {
     // convert gender to lower case with underscores
@@ -43,10 +43,21 @@ function renderHtml(id, referral) {
             <li>DOB: ${referral.dob}</li>
             <li>Gender: ${referral.gender}</li>
             <li>Location: ${referral.location}</li>
-          </ul>
-          <p>Open OSCaR
-            <a href='http://${referral.oscarSubdomain}.oscarhq-staging.com/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
-          </p>`;
+          </ul>`;
+
+    // If the org uses OSCaR then render the import case link here
+    // Else render out the link to the OSCaR website homepage!
+    if(!referral.oscarSubdomain == '') {
+      htmlBody = `${htmlBody}
+      <p>Open OSCaR
+        <a href='https://${referral.oscarSubdomain}.${oscarDomain}/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
+      </p>`;
+    } else {
+      htmlBody = `${htmlBody}
+      <p>Not using OSCaR? Check it out here:
+        <a href='https://${oscarDomain}/'>OSCaR</a>
+      </p>`;
+    }
 
     // If a lat and lon value are available then include a link to a map
     if(referral.lat && referral.lon) {

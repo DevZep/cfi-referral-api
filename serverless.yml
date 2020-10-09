@@ -35,6 +35,7 @@ provider:
     tableNameCount: ${self:custom.dynamodb.tableNameCount}
     toEmails: ${env:TO_EMAILS}
     fromEmail: ${env:FROM_EMAIL}
+    oscarDomain: ${env:OSCAR_DOMAIN}
     s3BucketAttachments: ${self:custom.s3.bucketAttachments}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
