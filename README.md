@@ -113,3 +113,16 @@ Now you can test in the `dev` environment with a clean DynamoDB and Cognito data
 The AWS Resources are configured under the [resources](./resources) directory. To add new resources or add new properties to existing resources refer to the [AWS CloudFormation resource and property types reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
 
 For example, I recently added a `PasswordPolicy` to the [`AWS::Cognito::UserPool`](./resources/cognito-user-pool.yml) resource and it turns out that it is necessary to put the `PasswordPolicy` under `Policies` key as identified in the [AWS::Cognito::UserPool CloudFormation Documention](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpool.html) AWS  So pay attention to these docs! :)
+
+## Cognito - Set Users Password
+
+To manually set a users password, use the following:
+
+```
+aws cognito-idp admin-set-user-password \
+--user-pool-id the-user-pool-id \
+--username the-username \
+--password a-new-strong-password \
+--permanent \
+--profile default
+```
