@@ -54,7 +54,7 @@ test('renderText() when referral NOT found', () => {
 })
 
 test('renderText() when referral IS found', () => {
-  expect(email.renderText(id, referral)).toEqual(`Name: ${referral.name}\nPhone: ${referral.phone}\nNote: ${referral.note}\nDOB: ${referral.dob}\nGender: ${referral.gender}\nLocation: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`)
+  expect(email.renderText(id, referral)).toEqual(`ឈ្មោះ / Name: ${referral.name}\nលេខទូរស័ព្ទ / Phone: ${referral.phone}\nចំណាំ / Note: ${referral.note}\nថ្ងៃខែ​ឆ្នាំ​កំណើត / DOB: ${referral.dob}\nភេទ / Gender: ${referral.gender}\nចំណាត់ថ្នាក់ទីតាំង / Location: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`)
 })
 
 describe('renderHtml()', () => {
@@ -69,14 +69,14 @@ describe('renderHtml()', () => {
       <html>
         <head></head>
         <body>
-          <h3>There is a new referral</h3>
+          <h3>ទម្រង់បញ្ជូន / There is a new referral</h3>
           <ul>
-            <li>Name: ${referral.name}</li>
-            <li>Phone: ${referral.phone}</li>
-            <li>Note: ${referral.note}</li>
-            <li>DOB: ${referral.dob}</li>
-            <li>Gender: ${referral.gender}</li>
-            <li>Location: ${referral.location}</li>
+            <li>ឈ្មោះ / Name: ${referral.name}</li>
+            <li>លេខទូរស័ព្ទ / Phone: ${referral.phone}</li>
+            <li>ចំណាំ / Note: ${referral.note}</li>
+            <li>ថ្ងៃខែ​ឆ្នាំ​កំណើត / DOB: ${referral.dob}</li>
+            <li>ភេទ / Gender: ${referral.gender}</li>
+            <li>ចំណាត់ថ្នាក់ទីតាំង / Location Classification: ${referral.location}</li>
           </ul>
       <p>Open OSCaR
         <a href='https://dc.${oscarDomain}/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
@@ -93,14 +93,14 @@ describe('renderHtml()', () => {
       <html>
         <head></head>
         <body>
-          <h3>There is a new referral</h3>
+          <h3>ទម្រង់បញ្ជូន / There is a new referral</h3>
           <ul>
-            <li>Name: ${referral.name}</li>
-            <li>Phone: ${referral.phone}</li>
-            <li>Note: ${referral.note}</li>
-            <li>DOB: ${referral.dob}</li>
-            <li>Gender: ${referral.gender}</li>
-            <li>Location: ${referral.location}</li>
+            <li>ឈ្មោះ / Name: ${referral.name}</li>
+            <li>លេខទូរស័ព្ទ / Phone: ${referral.phone}</li>
+            <li>ចំណាំ / Note: ${referral.note}</li>
+            <li>ថ្ងៃខែ​ឆ្នាំ​កំណើត / DOB: ${referral.dob}</li>
+            <li>ភេទ / Gender: ${referral.gender}</li>
+            <li>ចំណាត់ថ្នាក់ទីតាំង / Location Classification: ${referral.location}</li>
           </ul>
       <p>Not using OSCaR? Check it out here:
         <a href='https://${oscarDomain}/'>OSCaR</a>
