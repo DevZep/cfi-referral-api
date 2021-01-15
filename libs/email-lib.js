@@ -13,9 +13,9 @@ function checkWhitelist(whitelist, orgemail) {
 function renderText(id, referral) {
   let textBody;
   if(referral) {
-    textBody = `ឈ្មោះ / Name: ${referral.name}\nលេខទូរស័ព្ទ / Phone: ${referral.phone}\nចំណាំ / Note: ${referral.note}\nDOB: ${referral.dob}\nភេទ / Gender: ${referral.gender}\nចំណាត់ថ្នាក់ទីតាំង / Location: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`;
+    textBody = `ឈ្មោះ / Name: ${referral.name}\nលេខទូរស័ព្ទ / Phone: ${referral.phone}\nចំណាំ / Note: ${referral.note}\nថ្ងៃ ខែ ឆ្នាំកំណើត / DOB: ${referral.dob}\nភេទ / Gender: ${referral.gender}\nចំណាត់ថ្នាក់ទីតាំង / Location: ${referral.location}\nLat: ${referral.lat}\nLon: ${referral.lon}`;
   } else {
-    textBody = `Referral ${id} Not Found. Please Contact Support.`;
+    textBody = `ការបញ្ជុនមិនត្រូវបានឃើញ!សូមស្វែងរកការគាំទ្រ / Referral ${id} Not Found. Please Contact Support.`;
   }
   return textBody;
 }
@@ -40,7 +40,7 @@ function renderHtml(id, referral, oscarDomain) {
             <li>ឈ្មោះ / Name: ${referral.name}</li>
             <li>លេខទូរស័ព្ទ / Phone: ${referral.phone}</li>
             <li>ចំណាំ / Note: ${referral.note}</li>
-            <li>DOB: ${referral.dob}</li>
+            <li>ថ្ងៃ ខែ ឆ្នាំកំណើត / DOB: ${referral.dob}</li>
             <li>ភេទ / Gender: ${referral.gender}</li>
             <li>ចំណាត់ថ្នាក់ទីតាំង / Location Classification: ${referral.location}</li>
           </ul>`;
@@ -49,12 +49,12 @@ function renderHtml(id, referral, oscarDomain) {
     // Else render out the link to the OSCaR website homepage!
     if(!referral.oscarSubdomain == '') {
       htmlBody = `${htmlBody}
-      <p>Open OSCaR
+      <p>បើកOSCaR / Open OSCaR
         <a href='https://${referral.oscarSubdomain}.${oscarDomain}/clients/new?name=${referral.name}&client_phone=${referral.phone}&date_of_birth=${referral.dob}&gender=${gender}'>OSCaR</a>
       </p>`;
     } else {
       htmlBody = `${htmlBody}
-      <p>Not using OSCaR? Check it out here:
+      <p>បើមិនកំពុងប្រើOSCaR? សូមពិនិត្យនៅទីនេះ / Not using OSCaR? Check it out here:
         <a href='https://${oscarDomain}/'>OSCaR</a>
       </p>`;
     }
@@ -62,7 +62,7 @@ function renderHtml(id, referral, oscarDomain) {
     // If a lat and lon value are available then include a link to a map
     if(referral.lat && referral.lon) {
       htmlBody = `${htmlBody}
-      <p>Open Location on
+      <p>បើកទីតាំងនៅលើផែនទី / Open Location on
         <a href='https://maps.google.com/maps?q=${referral.lat},${referral.lon}'>Map</a>
       </p>`;
     }
